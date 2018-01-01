@@ -21,12 +21,12 @@ RedLTurtle {
 		}, {
 			this.prDrawSys(lsystem.production, 0);
 		});
-		Pen.stroke;
 	}
 	defaultCommands {
 		^(
 			$F: {|depth, depthLength, index|
 				Pen.line(Point(0, 0), Point(0, depthLength.neg));
+				Pen.stroke;
 				Pen.translate(0, depthLength.neg);
 			},
 			$G: {|depth, depthLength, index|
@@ -46,6 +46,7 @@ RedLTurtle {
 			},
 			$|: {|depth, depthLength, index|
 				Pen.line(Point(0, 0), Point(0, depthLength.neg));
+				Pen.stroke;
 				Pen.translate(0, depthLength.neg);
 			}
 		);
@@ -66,7 +67,7 @@ RedLTurtle {
 		win.front;
 		^win;
 	}
-	
+
 	//--private
 	prDrawStr {|x, depth|
 		var depthLength;

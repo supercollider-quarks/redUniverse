@@ -301,7 +301,6 @@ t= RedLTurtle(l, 60, 66.67, 1, 0.1);
 t.preCommandAction= {|depth, depthLength, index|
 	var c= index/size;
 	Pen.strokeColor= Color.grey(c, c);
-	Pen.stroke;	//stroke needed because of colour change
 };
 t.makeWindow;
 )
