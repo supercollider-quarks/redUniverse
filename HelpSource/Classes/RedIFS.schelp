@@ -32,6 +32,12 @@ Start drawing at current link::Classes/Pen:: position.
 METHOD:: makeWindow
 Creates a link::Classes/Window:: and draws. Mainly for testing.
 
+argument::bounds
+a link::Classes/Rect:: that define window size and position
+
+argument::background
+a link::Classes/Color::
+
 METHOD:: drawFunc
 
 METHOD:: matrices
@@ -50,13 +56,13 @@ a= RedIFS(nil, m, 10000, 100);
 a.makeWindow
 a.n= 1000
 a.makeWindow
-a.drawFunc= {|point| Pen.addWedge(point, 3, 0.125pi, 1.75pi)};
+a.drawFunc= {|point| Pen.addWedge(point, 3, 0.125pi, 1.75pi); Pen.fill};
 a.makeWindow
 a.matrices= [[0.5, 0, 0, 0.5, -0.25, 0.25], [0.5, 0, 0, 0.5, 0.25, 0.25], [0, -0.5, 0.5, 0, 0.25, -0.25]];
 a.makeWindow
 a.n= 1500
-a.drawFunc= {|point| Pen.lineTo(point)};
-a.makeWindow(Rect(100, 200, 800, 600)).view.background_(Color.red)
+a.drawFunc= {|point| Pen.lineTo(point); Pen.stroke};
+a.makeWindow(Rect(100, 200, 800, 600), Color.red)
 
 //--
 (
@@ -73,7 +79,6 @@ u.background= Color.white;
 u.drawFunc= {
 	Pen.translate(width*0.5, height*0.5);
 	a.draw(width, height);
-	Pen.stroke;
 };
 w.front;
 )
@@ -94,7 +99,6 @@ u.clearOnRefresh= false;
 u.drawFunc= {
 	Pen.translate(width*0.5, height*0.5);
 	a.draw(width, height);
-	Pen.stroke;
 };
 w.front;
 Routine({while({w.isClosed.not}, {u.refresh; (1/30).wait})}).play(AppClock);
@@ -108,7 +112,7 @@ var m= [
 	[0.5, 0.3, 0, 0.5, 0.25, 0.25],
 	[0.5, 0, 0.3, 0.5, 0, -0.25]
 ];
-var f= {|point| Pen.rotate(0.0006); Pen.line(point, point+5)};
+var f= {|point| Pen.rotate(0.0006); Pen.line(point, point+5); Pen.stroke};
 var a= RedIFS(f, m, 5000);
 var w= Window("ifs", Rect(100, 200, width, height), false);
 var u= UserView(w, Rect(0, 0, width, height));
@@ -117,10 +121,9 @@ u.drawFunc= {
 	Pen.translate(width*0.5, height*0.5);
 	a.matrices= m*(sin(cnt%100/100*2pi)*0.1+1)+(sin(cnt%320/320*2pi)*0.1);
 	a.draw(width, height);
-	Pen.stroke;
 	cnt= cnt+1;
 };
+u.animate= true;
 w.front;
-Routine({while({w.isClosed.not}, {u.refresh; (1/20).wait})}).play(AppClock);
 )
 ::
