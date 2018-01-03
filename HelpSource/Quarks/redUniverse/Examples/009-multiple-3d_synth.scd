@@ -4,8 +4,8 @@
 (
 s.waitForBoot{
 	var width= 300, height= 300, depth= 300, w, wgrav, world, n= 10,
-		ff= 1.25, ss= 0.25, synths;
-	
+	ff= 1.25, ss= 0.25, synths;
+
 	//--synthesis
 	SynthDef("fm3Dtest", {|out= 0, t_trig= 0, amp= 0.1, dur= 0.1, freq= 400, pan= 0, freq2= 600|
 		Out.ar(out,
@@ -15,22 +15,22 @@ s.waitForBoot{
 				pan
 			)
 		);
-	}).send(s);
+	}).add;
 	s.sync;
-	
+
 	//--world
 	w= RedWindow("3d test", Rect(128, 64, width, height)).front;
 	wgrav= RedVector3D[0.1, 0.98, 0.1];
-	world= RedWorld3(RedVector3D[width, height, depth], wgrav, 20, 0.1); //dim,grav,maxvel,damp
-	//world= RedWorld2(RedVector3D[width, height, depth], wgrav, 20, 0.92); //dim,grav,maxvel,damp
-	
+	world= RedWorld3(RedVector3D[width, height, depth], wgrav, 20, 0.1);	//dim,grav,maxvel,damp
+	//world= RedWorld2(RedVector3D[width, height, depth], wgrav, 20, 0.92);	//dim,grav,maxvel,damp
+
 	//--objects
 	{
 		var mass= 5.0.rand;
-		RedObject(world, RedVector3D[width, height, depth].rand, RedVector3D[2, 2, 2].rand2, RedVector3D[2, 2, 2].rand2*10, mass, mass*5); //world,loc,vel,acc,mass,size
+		RedObject(world, RedVector3D[width, height, depth].rand, RedVector3D[2, 2, 2].rand2, RedVector3D[2, 2, 2].rand2*10, mass, mass*5);	//world,loc,vel,acc,mass,size
 	}.dup(n);
 	synths= {Synth("fm3Dtest", [\amp, 0.5/n])}.dup(n);
-	
+
 	//--loop
 	w.draw{
 		Pen.strokeColor= Color.grey(0.5);
@@ -44,7 +44,7 @@ s.waitForBoot{
 			flag= world.contains(o).not;
 			world.contain(o);
 			dep= depth-o.loc[2]/(depth/2);
-						if(flag, {
+			if(flag, {
 				synths[i].set(
 					\t_trig, 1,
 					\amp, dep*((o.mass/5).max(0.2)/n),
@@ -55,13 +55,13 @@ s.waitForBoot{
 					\pan, o.loc[0].linlin(0, width, dep.neg, dep)
 				);
 			});
-			
+
 			//--render
-			Pen.fillColor= Color.grey(dep, 0.5);
+			Pen.fillColor= Color.grey(dep.clip(0, 1), 0.75);
 			Pen.fillOval(Rect.aboutRedObject3D(o, ff, ss));
 		};
 	};
 	w.animate= true;
-	CmdPeriod.doOnce({if(w.isOpen, {w.close})});
+	CmdPeriod.doOnce({w.close});
 	w.onClose= {synths.do{|x| x.free}};
 })

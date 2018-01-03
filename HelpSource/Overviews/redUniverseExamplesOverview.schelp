@@ -2,11 +2,6 @@ TITLE:: redUniverseExamplesOverview
 SUMMARY:: just a long list of examples to try out
 CATEGORIES:: Red
 
-NOTE::
-for running these examples with qt, replace RedWindow with RedQWindow.
-if you see • ERROR: Qt: Usage of QPen is not allowed at this point!, then you need to change from RedWindow to RedQWindow
-::
-
 list::
 ## link::Quarks/redUniverse/Examples/001-single.scd::
 ## link::Quarks/redUniverse/Examples/002-multiple.scd::
@@ -84,8 +79,9 @@ list::
 ::
 
 table::
-## link::Classes/RedWindow::, link::Classes/RedQWindow::, link::Classes/RedJWindow:: || wrappers for windows
+## link::Classes/RedWindow:: || wrapper for link::Classes/Window::
 ## link::Classes/RedVector:: || vector of any dimension
+## link::Classes/RedVector2D::, link::Classes/RedVector3D:: || optimised vector objects of specific dimensions
 ## link::Classes/RedSpring:: || helper class for keeping track of springs
 ## link::Classes/RedUniverse::, link::Classes/RedWorld::, link::Classes/RedObject::, link::Classes/RedPendulum::, link::Classes/RedAgent::, link::Classes/RedHiddenObject::, link::Classes/RedFood::, link::Classes/RedRock::, link::Classes/RedBoid::, link::Classes/RedParticle:: || fundamental objects in the redUniverse toolkit
 ## link::Classes/RedLSystem::, link::Classes/RedLTurtle::, link::Classes/RedFingerprint::, link::Classes/RedMRCM::, link::Classes/RedIFS::, link::Classes/RedPerlin::, link::Classes/RedKMeans:: || additional classes

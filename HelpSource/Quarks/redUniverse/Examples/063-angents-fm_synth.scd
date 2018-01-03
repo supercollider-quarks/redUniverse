@@ -5,8 +5,8 @@
 (
 s.waitForBoot{
 	var width= 300, height= 300, w, wgrav, world, n= 4,
-		objsFunc, fmbusses, rmbusses, delay, dist, drums;
-	
+	objsFunc, fmbusses, rmbusses, delay, dist, drums;
+
 	//--synthesis
 	SynthDef(\teknoDrum, {|out= 0, t_trig= 0, fmbusin= 50, fmbusout= 60, rmbusin= 70, rmbusout= 80, fmsend= 0, fmamount= 0, rmsend= 0, rmamount= 0, freq= 60, atk= 0.01, dec= 0.2, pitchatk= 0.01, pitchdec= 0.2, env= 0, pol= 1, amp= 1, pan= 0|
 		var dry, wet, src, fmod, rmod, freq2, aenv, penv;
@@ -21,8 +21,8 @@ s.waitForBoot{
 		Out.ar(fmbusout, src*fmsend);
 		Out.ar(rmbusout, src*rmsend);
 		Out.ar(out, Pan2.ar(src, pan, amp));
-	}).send(s);
-	
+	}).add;
+
 	SynthDef(\teknoDist, {|in= 0, out= 0, lp= 127, hp= 0, res= 0.3, lfo= 0.1, dp= 0, env= 0.01, spd= 3, dis= 0, mix= 0|
 		var dry, wet, lfosc, envfollow;
 		dry= Limiter.ar(In.ar(in, 2));
@@ -34,8 +34,8 @@ s.waitForBoot{
 		wet= RHPF.ar(RLPF.ar(dry, (lp+lfosc).midicps, res), hp.midicps, 2);
 		wet= (wet*(dis+1)).softclip;
 		Out.ar(out, XFade2.ar(dry, wet, mix*2-1));
-	}, #[0, 0, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0]).send(s);
-	
+	}, #[0, 0, 0.1, 0.1, 0.1, 0, 0, 0, 0, 0, 0]).add;
+
 	SynthDef(\teknoDelay, {|in= 0, out= 0, lp= 127, hp= 0, lfo= 0.1, dp= 0, bpm= 120, sub= 2, fn= 0, fb= 0.1, mix= 0|
 		var dry, wet, lfosc, ms, feedback, del;
 		feedback= LocalIn.ar(2);
@@ -47,7 +47,7 @@ s.waitForBoot{
 		wet= wet+del;
 		LocalOut.ar(wet);
 		Out.ar(out, XFade2.ar(dry, wet, mix*2-1));
-	}, #[0, 0, 0.1, 0.1, 0, 0, 0, 0, 0, 0, 0]).send(s);
+	}, #[0, 0, 0.1, 0.1, 0, 0, 0, 0, 0, 0, 0]).add;
 
 	SynthDef(\teknoBusses, {|in= 80, out= 70|
 		var input, mix0, mix1, mix2, mix3;
@@ -57,9 +57,9 @@ s.waitForBoot{
 		mix2= input[0]+input[1]+input[3];
 		mix3= input[0]+input[1]+input[2];
 		Out.ar(out, [mix0, mix1, mix2, mix3]);
-	}).send(s);
+	}).add;
 	s.sync;
-	
+
 	fmbusses= Synth(\teknoBusses, [\out, 50, \in, 60]);
 	rmbusses= Synth(\teknoBusses, [\out, 70, \in, 80]);
 	delay= Synth(\teknoDelay, [\out, 0, \in, 12, \mix, 0.3]);
@@ -71,17 +71,17 @@ s.waitForBoot{
 		Synth(\teknoDrum, [\out, 10, \fmbusin, 53, \fmbusout, 63, \rmbusin, 73, \rmbusout, 83]),
 	];
 	s.sync;
-	
+
 	//--world
 	w= RedWindow("agents test tekno", Rect(128, 64, width, height)).front;
 	wgrav= RedVector2D[0, 0.98];
-	world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.9); //dim,grav,maxvel,damp
-	
+	world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.9);	//dim,grav,maxvel,damp
+
 	//--objects
 	objsFunc= {
 		var loc= RedVector2D[width, height].rand;
-		var obj= RedAgent(world, loc, RedVector2D[0.5, 0.5].rand2, nil, 1, 10) //world,loc,vel,acc,mass,size
-			.maxForce_(4).wchange_(0.7).wdistance_(1).wradius_(5);
+		var obj= RedAgent(world, loc, RedVector2D[0.5, 0.5].rand2, nil, 1, 10)	//world,loc,vel,acc,mass,size
+		.maxForce_(4).wchange_(0.7).wdistance_(1).wradius_(5);
 		obj.state= (
 			\fmamount: 0,
 			\fmsend: 1,
@@ -99,7 +99,7 @@ s.waitForBoot{
 		);
 	};
 	objsFunc.dup(n);
-	
+
 	//--sequence
 	Tdef(\seq, {
 		loop{
@@ -113,7 +113,7 @@ s.waitForBoot{
 			(1/(100/60)/4).wait
 		}
 	}).play;
-	
+
 	//--loop
 	w.draw{
 		var replace= world.objects.choose;
@@ -132,7 +132,7 @@ s.waitForBoot{
 					o.state[\rmamount]= (width-o.loc.distance(oo.loc)/width).clip(0, 0.6);
 				});
 			};
-			
+
 			o.addForce(world.gravity);
 			o.update;
 			world.contain(o);
@@ -150,14 +150,14 @@ s.waitForBoot{
 				\pol, o.state[\pol],
 				\pan, o.loc[0]/width*2-1
 			);
-			
+
 			//--render
 			Pen.fillColor= Color.grey(o.state[\level]*0.85+0.15, 0.5);
 			Pen.fillRect(Rect.aboutRedObject2D(o));
 		};
 	};
 	w.animate= true;
-	CmdPeriod.doOnce({if(w.isOpen, {w.close})});
+	CmdPeriod.doOnce({w.close});
 	w.onClose= {
 		Tdef(\seq).stop;
 		fmbusses.free;

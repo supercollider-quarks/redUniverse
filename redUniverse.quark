@@ -1,9 +1,10 @@
 (
 	\name:		"redUniverse",
 	\path:		"redUniverse",
-	\summary:	"a simple toolkit for sonification and visualisation of dynamic systems\n\tsee the file 'readme.txt' for more info",
+	\summary:	"a simple toolkit for sonification and visualisation of dynamic systems",
 	\author:		"redFrik",
 	\helpdoc:		"redUniverseExamplesOverview.html",
 	\url:			"http://www.fredrikolofsson.com/",
-	\isCompatible:	{Main.versionAtLeast(3,5)}
+	\version:			1.1,
+	\isCompatible:	{Main.versionAtLeast(3,6)}
 )

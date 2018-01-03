@@ -40,10 +40,10 @@ Coordinates as points.
 EXAMPLES::
 
 CODE::
-l= {1.0.rand}.dup(100)		//an array with random values
-a= RedFingerprint(l)		//a fingerprint object
-a.points			//coordinates
-a.makeWindow			//plot
+l= {1.0.rand}.dup(100)	//an array with random values
+a= RedFingerprint(l)	//a fingerprint object
+a.points	//coordinates
+a.makeWindow	//plot
 a.makeWindow(scale:0.33)	//same data but smaller scale
 
 l= Env.perc.asSignal
@@ -127,11 +127,11 @@ CmdPeriod.doOnce({win.close});
 (
 s.waitForBoot{
 	var n= 5, scale= 190,
-		win, usr, cnt= 200, wt0, wt1, syn, rf;
+	win, usr, cnt= 200, wt0, wt1, syn, rf;
 	var b= Buffer.alloc(s, 256, 1);
 	SynthDef(\wormsnd, {|out= 0, bufnum, freq= 60, amp= 0.01, pan= 0|
 		Out.ar(out, Pan2.ar(Osc.ar(bufnum, freq, 0, amp), pan));
-	}).send(s);
+	}).add;
 	s.sync;
 
 	syn= Synth(\wormsnd, [\bufnum, b.bufnum, \amp, 1]);
@@ -170,11 +170,11 @@ s.waitForBoot{
 (
 s.waitForBoot{
 	var n= 60, scale= 120,
-		win, usr, cnt= 5, wt0, wt1, syn, rf;
+	win, usr, cnt= 5, wt0, wt1, syn, rf;
 	var b= Buffer.alloc(s, 256, 1);
 	SynthDef(\wormsnd, {|out= 0, bufnum, freq= 60, amp= 0.01, pan= 0|
 		Out.ar(out, Pan2.ar(Osc.ar(bufnum, freq, 0, amp), pan));
-	}).send(s);
+	}).add;
 	s.sync;
 	syn= Synth(\wormsnd, [\bufnum, b.bufnum]);
 	s.sync;

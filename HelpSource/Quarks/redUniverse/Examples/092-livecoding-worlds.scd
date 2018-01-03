@@ -2,52 +2,52 @@
 //livecoding world crossfades and sequences
 
 (
-	//~world										//our handles  for livecoding
-	//~win
-	//~n
-	
-	var width= 300, height= 300, wgrav;
-	~n= 8;
-	
-	//--world
-	RedUniverse.clear;
-	~win= RedWindow("livecoding worlds test", Rect(128, 164, width, height)).front;
-	~world= RedWorld.new; //dim,grav,maxvel,damp
-	
-	//--objects
-	{
-		var loc= RedVector2D[width, height].rand;
-		var vel= RedVector2D[0.5, 0.5].rand2;
-		var mass= 1;
-		RedBoid(~world, loc, vel, 0, mass, mass*5) //world,loc,vel,acc,mass,size
-			.maxForce_(0.6.rrand(1.6));
-	}.dup(~n);
-	
-	//--loop
-	~win.draw{
-		if(~world.gravity[0]>1, {
-			~win.background= Color.red(1, 0.5);
+//~world	//our handles  for livecoding
+//~win
+//~n
+
+var width= 300, height= 300, wgrav;
+~n= 8;
+
+//--world
+RedUniverse.clear;
+~win= RedWindow("livecoding worlds test", Rect(128, 164, width, height)).front;
+~world= RedWorld.new;	//dim,grav,maxvel,damp
+
+//--objects
+{
+	var loc= RedVector2D[width, height].rand;
+	var vel= RedVector2D[0.5, 0.5].rand2;
+	var mass= 1;
+	RedBoid(~world, loc, vel, 0, mass, mass*5)	//world,loc,vel,acc,mass,size
+	.maxForce_(0.6.rrand(1.6));
+}.dup(~n);
+
+//--loop
+~win.draw{
+	if(~world.gravity[0]>1, {
+		~win.background= Color.red(1, 0.5);
+	}, {
+		~win.background= Color.blue(~world.gravity[1], 0.5);
+	});
+	~world.objects.do{|o, i|
+		if(i!=0, {
+			o.addForceWander2D;
+			o.addForceSeek(~world.objects.wrapAt(i-1).loc);
 		}, {
-			~win.background= Color.blue(~world.gravity[1], 0.5);
+			o.addForceWander2D;
 		});
-		~world.objects.do{|o, i|
-			if(i!=0, {
-				o.addForceWander2D;
-				o.addForceSeek(~world.objects.wrapAt(i-1).loc);
-			}, {
-				o.addForceWander2D;
-			});
-			o.addForce(~world.gravity);
-			o.update;
-			~world.contain(o);
-			
-			//--render
-			Pen.fillColor= Color.grey(1-(i/~n), 0.5);
-			Pen.fillOval(Rect.aboutRedObject2D(o));
-		};
+		o.addForce(~world.gravity);
+		o.update;
+		~world.contain(o);
+
+		//--render
+		Pen.fillColor= Color.grey(1-(i/~n), 0.5);
+		Pen.fillOval(Rect.aboutRedObject2D(o));
 	};
-	~win.animate= true;
-	CmdPeriod.doOnce({if(~win.isOpen, {~win.close})});
+};
+~win.animate= true;
+CmdPeriod.doOnce({~win.close});
 )
 
 
@@ -59,9 +59,9 @@
 
 //--interpolate and migrate
 (
-~mix= RedUniverse.interpolate(~blue, ~black, 0.5);		//half black, half blue
-~world= RedUniverse.migrateAll(~world, ~mix);			//move all to new world
-~win.resize(~world.dim);							//resize window
+~mix= RedUniverse.interpolate(~blue, ~black, 0.5);	//half black, half blue
+~world= RedUniverse.migrateAll(~world, ~mix);	//move all to new world
+~win.resize(~world.dim);	//resize window
 )
 
 

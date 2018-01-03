@@ -53,9 +53,9 @@ RedUniverse.worlds
 RedUniverse.remove(a)
 RedUniverse.worlds
 
-RedUniverse.write("testsave")
+RedUniverse.write("~/Desktop/testsave".standardizePath)
 RedUniverse.clear
 RedUniverse.worlds
-RedUniverse.read("testsave")
+RedUniverse.read("~/Desktop/testsave".standardizePath)
 RedUniverse.worlds
 ::

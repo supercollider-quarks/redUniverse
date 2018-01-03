@@ -1,35 +1,35 @@
 //patterns and particles
 
 (
-	var width= 640, height= 480, w, wgrav, world;
-	
-	//--world
-	w= RedWindow("patterns and particles", Rect(128, 64, width, height)).front;
-	w.userView.clearOnRefresh= true;
-	w.background= Color.white;
-	wgrav= RedVector2D[0, 0.98];
-	world= RedWorld(RedVector[width, height], wgrav, 30, 0.1); //dim,grav,maxvel,damp
-	~world= world;
-	
-	//--loop
-	w.draw{
-		var dead= List.new;
-		
-		world.objects.do{|o, i|
-			o.addForce(world.gravity);
-			o.update;
-			if(o.age<=0, {dead.add(o)});
-			
-			//--render
-			Pen.fillColor= Color.red;
-			Pen.addOval(Rect.aboutRedVector2D(o.loc, o.age));
-			Pen.fill;
-		};
-		
-		dead.do{|o| world.remove(o)};
+var width= 640, height= 480, w, wgrav, world;
+
+//--world
+w= RedWindow("patterns and particles", Rect(128, 64, width, height)).front;
+w.userView.clearOnRefresh= true;
+w.background= Color.white;
+wgrav= RedVector2D[0, 0.98];
+world= RedWorld(RedVector[width, height], wgrav, 30, 0.1);	//dim,grav,maxvel,damp
+~world= world;
+
+//--loop
+w.draw{
+	var dead= List.new;
+
+	world.objects.do{|o, i|
+		o.addForce(world.gravity);
+		o.update;
+		if(o.age<=0, {dead.add(o)});
+
+		//--render
+		Pen.fillColor= Color.red;
+		Pen.addOval(Rect.aboutRedVector2D(o.loc, o.age));
+		Pen.fill;
 	};
-	w.animate= true;
-	CmdPeriod.doOnce({if(w.isOpen, {w.close})});
+
+	dead.do{|o| world.remove(o)};
+};
+w.animate= true;
+CmdPeriod.doOnce({w.close});
 )
 
 //keep reduniverse window open and run the code below line by line

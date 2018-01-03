@@ -1,31 +1,31 @@
 //live coding objects and worlds
 
 (
-	//~world
-	//~win
-	
-	var width= 300, height= 300, wgrav;
-	
-	//--world
-	~win= RedWindow("livecoding test", Rect(128, 64, width, height)).front;
-	wgrav= RedVector2D[-0.4, 0.98];
-	~world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.25); //dim,grav,maxvel,damp
-	
-	//--loop
-	~win.draw{
-		Pen.strokeColor= Color.white;
-		~world.objects.do{|o|
-			o.addForce(o.world.gravity);
-			o.update;
-			o.world.contain(o);
-			
-			//--render
-			Pen.strokeRect(Rect.aboutRedObject2D(o));
-		};
-		//Pen.strokeRect(Rect.aboutRedVector2D(~win.mouse, 10));
+//~world
+//~win
+
+var width= 300, height= 300, wgrav;
+
+//--world
+~win= RedWindow("livecoding test", Rect(128, 64, width, height)).front;
+wgrav= RedVector2D[-0.4, 0.98];
+~world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.25);	//dim,grav,maxvel,damp
+
+//--loop
+~win.draw{
+	Pen.strokeColor= Color.white;
+	~world.objects.do{|o|
+		o.addForce(o.world.gravity);
+		o.update;
+		o.world.contain(o);
+
+		//--render
+		Pen.strokeRect(Rect.aboutRedObject2D(o));
 	};
-	~win.animate= true;
-	CmdPeriod.doOnce({if(~win.isOpen, {~win.close})});
+	//Pen.strokeRect(Rect.aboutRedVector2D(~win.mouse, 10));
+};
+~win.animate= true;
+CmdPeriod.doOnce({~win.close});
 )
 
 //--swapping in new object

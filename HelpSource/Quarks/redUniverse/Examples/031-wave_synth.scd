@@ -4,31 +4,31 @@
 (
 s.waitForBoot{
 	var width= 300, height= 300, w, wgrav, world, n= 30,
-		sys, synths;
-	
+	sys, synths;
+
 	//--synthesis
 	SynthDef(\sine, {|out= 0, freq= 400, beat= 1, amp= 1, pan= 0|
 		var z;
 		z= Mix(SinOsc.ar(freq+[0, beat], 0, amp*0.5));
 		Out.ar(out, Pan2.ar(z, pan));
-	}).send(s);
+	}).add;
 	s.sync;
-	
+
 	//--world
 	RedUniverse.clear;
 	w= RedWindow("wave test synths", Rect(128, 64, width, height)).front;
 	wgrav= RedVector2D[0, 0.04];
-	world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.2); //dim,grav,maxvel,damp
-	
+	world= RedWorld3(RedVector2D[width, height], wgrav, 20, 0.2);	//dim,grav,maxvel,damp
+
 	//--objects
 	sys= RedWaveSystem(n, {|i| i}, 0, {1.0.rand}, 0.1);
 	{|i|
 		var loc= RedVector2D[width/n*i, height/2];
-		sys.add(RedObject(world, loc, nil, nil, 1.5, 12)); //world,loc,vel,acc,mass,size
+		sys.add(RedObject(world, loc, nil, nil, 1.5, 12));	//world,loc,vel,acc,mass,size
 	}.dup(n);
 	synths= {|i| Synth(\sine, [\beat, 0, \amp, 0])}.dup(n);
 	s.sync;
-	
+
 	//--loop
 	w.draw{
 		if(0.005.coin, {world.gravity= RedVector2D[0, -0.7.rrand(0.7)]; world.gravity.postln});
@@ -42,7 +42,7 @@ s.waitForBoot{
 			synths[i].set(\amp, amp, \freq, freq, \pan, pan);
 		};
 		sys.update;
-		
+
 		//--render
 		Pen.fillColor= Color.grey(1, 0.4);
 		sys.do{|o, i|
@@ -50,7 +50,7 @@ s.waitForBoot{
 		};
 	};
 	w.animate= true;
-	CmdPeriod.doOnce({if(w.isOpen, {w.close})});
+	CmdPeriod.doOnce({w.close});
 	w.onClose= {synths.do{|x| x.free}};
 })
 
