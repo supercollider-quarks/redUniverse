@@ -12,6 +12,7 @@ more info in the [lam06-handout.pdf](lam06-handout.pdf)
 
 ## changelog:
 
+* 200131 - added lsystem grow example
 * 180226 - added linked and double pendulum examples
 * 180103 - unified RedWindow and removed RedJWindow and RedQWindow. checked and updated all examples (mostly formatting). new markdown readme
 * 140108 - RedFingerprint optimized pen drawing, removed RedWindow and corrected examples. removed old html helpfiles
