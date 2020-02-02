@@ -35,8 +35,8 @@ list::
 ## link::Quarks/redUniverse/Examples/045-pendulum4.scd::
 ## link::Quarks/redUniverse/Examples/046-pendulum5.scd::
 ## link::Quarks/redUniverse/Examples/047-pendulum_3d.scd::
-## link::Quarks/redUniverse/Examples/048-pendulums-linked::
-## link::Quarks/redUniverse/Examples/049-pendulum-double::
+## link::Quarks/redUniverse/Examples/048-pendulums-linked.scd::
+## link::Quarks/redUniverse/Examples/049-pendulum-double.scd::
 ## link::Quarks/redUniverse/Examples/050-boids.scd::
 ## link::Quarks/redUniverse/Examples/051-boids2.scd::
 ## link::Quarks/redUniverse/Examples/052-boids3.scd::
@@ -49,6 +49,7 @@ list::
 ## link::Quarks/redUniverse/Examples/063-angents-fm_synth.scd::
 ## link::Quarks/redUniverse/Examples/070-lsystem.scd::
 ## link::Quarks/redUniverse/Examples/071-lsystem_grow.scd::
+## link::Quarks/redUniverse/Examples/072-lsystem_grow_discrete.scd::
 ## link::Quarks/redUniverse/Examples/080-function_plot.scd::
 ## link::Quarks/redUniverse/Examples/090-livecoding.scd::
 ## link::Quarks/redUniverse/Examples/091-livecoding-worlds.scd::

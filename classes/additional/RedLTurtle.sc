@@ -36,7 +36,7 @@ RedLTurtle {
 				Pen.rotate(theta/360*2pi+noise.rand2);
 			},
 			$-: {
-				Pen.rotate(theta/360* -2pi+noise.rand2)
+				Pen.rotate(theta/360* -2pi+noise.rand2);
 			},
 			$[: {
 				Pen.push;
