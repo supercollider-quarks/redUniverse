@@ -48,8 +48,8 @@ s.waitForBoot{
 			//--render springs
 			Pen.moveTo(spr.object.loc.asPoint);
 			Pen.quadCurveTo(spr.target.loc.asPoint, w.mouse.asPoint);
+			Pen.stroke;
 		};
-		Pen.stroke;
 
 		Pen.fillColor= Color.grey(0, 0.5);
 		objs.do{|obj, i|

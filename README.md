@@ -1,4 +1,4 @@
-a [Quark](http://supercollider-quarks.github.io/quarks/) for [SuperCollider](http://supercollider.github.io)
+a [Quark](https://supercollider-quarks.github.io/quarks/) for [SuperCollider](https://supercollider.github.io)
 
 install it from within supercollider with the command `Quarks.install("redUniverse")` and then recompile.
 
@@ -6,12 +6,13 @@ install it from within supercollider with the command `Quarks.install("redUniver
 
 physics system. work in progress. happy for any comments or contributions.
 
-**NOTE**: some of the examples require additional classes like RedGA etc. these are available online at my homepage http://www.fredrikolofsson.com under code->supercollider
+**NOTE**: some of the examples require additional classes like RedGA etc. these are available online at my homepage <https://www.fredrikolofsson.com/code/sc/>
 
 more info in the [lam06-handout.pdf](lam06-handout.pdf)
 
 ## changelog:
 
+* 210521 - minor optimisation for drawing 3d
 * 200202 - added a discrete grow lsystem example
 * 200131 - added lsystem grow example
 * 180226 - added linked and double pendulum examples

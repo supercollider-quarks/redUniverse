@@ -5,6 +5,6 @@
 	\author:		"redFrik",
 	\helpdoc:		"redUniverseExamplesOverview.html",
 	\url:			"http://www.fredrikolofsson.com/",
-	\version:		1.4,
+	\version:		1.5,
 	\isCompatible:	{Main.versionAtLeast(3,6)}
 )

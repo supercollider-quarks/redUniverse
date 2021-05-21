@@ -56,10 +56,10 @@ w.draw{
 			Pen.addRect(Rect.aboutRedObject2D(o));
 		};
 
-
+		Pen.stroke;
 	};
-	Pen.stroke;
+
 };
-w.play(0.3);	//slow updaterate
+w.play(1);	//slow updaterate
 CmdPeriod.doOnce({w.close});
 )
