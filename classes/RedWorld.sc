@@ -34,7 +34,7 @@ RedWorld {
 	contains {|redObj|								//returns boolean if object inside world dim
 		^redObj.loc.any{|l, i| l-redObj.size<0 or:{l+redObj.size>dim[i]}}.not
 	}
-	
+
 	//--support for discrete worlds
 	neighbours {|redObj|
 		var surr= this.surroundingLocations(redObj);
@@ -61,6 +61,11 @@ RedWorld {
 
 //--world without walls (non wrapping)
 RedWorld1 : RedWorld {
+	*new {|dim, gravity, maxVel, damping|
+		dim= dim ?? {RedVector[300]};
+		gravity= gravity ?? {RedVector[0]};
+		^super.new(dim, gravity, maxVel, damping);
+	}
 	contain {|redObj|								//just not contain object at all
 	}
 	surroundingLocations {|obj|
@@ -80,6 +85,11 @@ RedWorld2 : RedWorld {
 
 //--world with hard walls
 RedWorld3 : RedWorld {
+	*new {|dim, gravity, maxVel, damping|
+		dim= dim ?? {RedVector3D[300, 300, 300]};
+		gravity= gravity ?? {RedVector3D[0, 0.98, 0]};
+		^super.new(dim, gravity, maxVel, damping);
+	}
 	contain {|redObj|								//keep object within world dim - bounce
 		redObj.loc.do{|l, i|
 			if(l-redObj.size<0 or:{l+redObj.size>dim[i]}, {
